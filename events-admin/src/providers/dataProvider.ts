@@ -34,7 +34,8 @@ export const dataProvider: DataProvider = {
         const payload = { ...params.data };
         
         if (!payload.id) {
-            payload.id = "evt-" + Math.random().toString(36).substring(2, 11);
+            const prefix = resource === 'rooms' ? 'rm' : 'evt';
+            payload.id = prefix + "-" + Math.random().toString(36).substring(2, 11);
         }
 
         const response = await fetch(`${apiUrl}/${resource}`, {
