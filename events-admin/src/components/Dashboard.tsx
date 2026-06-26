@@ -2,6 +2,7 @@ import { useGetList } from 'react-admin';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import GroupIcon from '@mui/icons-material/Group';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import AddIcon from '@mui/icons-material/Add';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
@@ -11,6 +12,7 @@ export const Dashboard = () => {
     const { total: totalEvents, isLoading: loadingEvents } = useGetList('events', { pagination: { page: 1, perPage: 1 } });
     const { total: totalSessions, isLoading: loadingSessions } = useGetList('sessions', { pagination: { page: 1, perPage: 1 } });
     const { total: totalSpeakers, isLoading: loadingSpeakers } = useGetList('speakers', { pagination: { page: 1, perPage: 1 } });
+    const { total: totalRooms, isLoading: loadingRooms } = useGetList('rooms', { pagination: { page: 1, perPage: 1 } });
 
     const { data: allEvents, isLoading: loadingList } = useGetList('events', {
         pagination: { page: 1, perPage: 10 },
@@ -63,7 +65,7 @@ export const Dashboard = () => {
                 LIVE METRICS & STATUS
             </Typography>
             <Grid container spacing={3} mb={5} alignItems="stretch">
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Card sx={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '16px', padding: 3, boxShadow: 'none', height: '100%', boxSizing: 'border-box' }}>
                         <Box display="flex" alignItems="center" gap={2}>
                             <Box sx={{ backgroundColor: 'rgba(163, 255, 18, 0.1)', borderRadius: '12px', p: 1.5, display: 'flex' }}>
@@ -79,7 +81,7 @@ export const Dashboard = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Card sx={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '16px', padding: 3, boxShadow: 'none', height: '100%', boxSizing: 'border-box' }}>
                         <Box display="flex" alignItems="center" gap={2}>
                             <Box sx={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '12px', p: 1.5, display: 'flex' }}>
@@ -95,7 +97,7 @@ export const Dashboard = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Card sx={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '16px', padding: 3, boxShadow: 'none', height: '100%', boxSizing: 'border-box' }}>
                         <Box display="flex" alignItems="center" gap={2}>
                             <Box sx={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '12px', p: 1.5, display: 'flex' }}>
@@ -111,7 +113,23 @@ export const Dashboard = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Card sx={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '16px', padding: 3, boxShadow: 'none', height: '100%', boxSizing: 'border-box' }}>
+                        <Box display="flex" alignItems="center" gap={2}>
+                            <Box sx={{ backgroundColor: 'rgba(163, 255, 18, 0.1)', borderRadius: '12px', p: 1.5, display: 'flex' }}>
+                                <MeetingRoomIcon sx={{ color: '#a3ff12', fontSize: '2rem' }} />
+                            </Box>
+                            <Box>
+                                <Typography variant="caption" sx={{ color: '#9ca3af', fontWeight: 600 }}>TOTAL ROOMS</Typography>
+                                <Typography variant="h5" sx={{ fontWeight: 800, mt: 0.5 }}>
+                                    {loadingRooms ? '...' : String(totalRooms).padStart(2, '0')}
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </Card>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
                     <Card sx={{ backgroundColor: '#111827', border: '1px solid #1f2937', borderRadius: '16px', padding: "16px 24px", boxShadow: 'none', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', boxSizing: 'border-box' }}>
                         {loadingList ? (
                             <Typography variant="caption" sx={{ color: '#9ca3af' }}>Loading status...</Typography>
