@@ -98,18 +98,11 @@ export const RoomList = () => (
                     },
                 }}
             >
-                <TextField
-                    source="id"
-                    label="ID"
-                    sx={{ fontFamily: 'monospace', color: '#9ca3af' }}
-                />
-                <TextField
-                    source="name"
-                    label="Room Name"
-                    sx={{ fontWeight: 700, color: '#a3ff12' }}
-                />
+                <TextField source="id" label="ID" sx={{ fontFamily: 'monospace', color: '#9ca3af' }} />
+                <TextField source="name" label="Room Name" sx={{ fontWeight: 700, color: '#a3ff12' }} />
                 <FunctionField
                     label="Address"
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     render={(record: any) => (
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                             <LocationOnIcon sx={{ color: '#9ca3af', fontSize: '1rem' }} />
@@ -121,6 +114,7 @@ export const RoomList = () => (
                 />
                 <FunctionField
                     label="Capacity"
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     render={(record: any) => (
                         <Chip
                             icon={<MeetingRoomIcon sx={{ fontSize: 14, color: '#a3ff12 !important' }} />}
