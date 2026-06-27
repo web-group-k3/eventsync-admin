@@ -1,4 +1,4 @@
-import { fetchUtils, DataProvider } from "react-admin";
+import { fetchUtils, DataProvider, DeleteParams, DeleteResult, RaRecord } from "react-admin";
 
 const apiUrl = "http://localhost:8080/api";
 
@@ -52,9 +52,11 @@ export const customDataProvider: DataProvider = {
         await httpClient(url, { method: 'DELETE' });
         return { data: params.previousData };
     },
-
     getMany: () => Promise.resolve({ data: [] }),
     getManyReference: () => Promise.resolve({ data: [], total: 0 }),
     updateMany: () => Promise.resolve({ data: [] }),
     deleteMany: () => Promise.resolve({ data: [] }),
+    delete: function <RecordType extends RaRecord = any>(resource: string, params: DeleteParams<RecordType>): Promise<DeleteResult<RecordType>> {
+        throw new Error("Function not implemented.");
+    }
 };

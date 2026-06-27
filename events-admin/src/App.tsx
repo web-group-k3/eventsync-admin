@@ -1,11 +1,21 @@
-import { Admin, Resource } from "react-admin";
-import { customDataProvider } from "./providers/customDataProvider";
-import { RoomList } from "./components/rooms/roomList";
-import { EventList } from "./components/events/EventList";
+import { Admin, Resource } from 'react-admin';
+import { customTheme } from './theme/customTheme';
+import { EventList } from './components/events/EventList';
+import { EventCreate } from './components/events/EventCreate';
+import { EventEdit } from './components/events/EventEdit';
+import dataProvider from './providers/dataProvider'
+import { authProvider } from './providers/authProvider';
 
-export const App = () => (
-  <Admin dataProvider={customDataProvider}>
-    <Resource name="rooms" list={RoomList} />
-    <Resource name="events" list={EventList} />
-  </Admin>
+const App = () => (
+    <Admin theme={customTheme} dataProvider={dataProvider} authProvider={authProvider}>
+        <Resource 
+            name="events" 
+            list={EventList}
+            create={EventCreate}
+            edit={EventEdit}
+            options={{ label: 'Event' }}
+        />
+    </Admin>
 );
+
+export default App;
