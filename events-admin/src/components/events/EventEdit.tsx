@@ -2,7 +2,7 @@ import { Edit, SimpleForm, TextInput, DateTimeInput, BooleanInput, required } fr
 import { Box } from '@mui/material';
 
 export const EventEdit = () => (
-    <Edit title="Mettre à jour l'événement">
+    <Edit title="Edit">
         <SimpleForm>
             <Box display="flex" flexDirection="column" width="100%" gap={2}>
                 <TextInput source="id" disabled label="Référence Unique" />
