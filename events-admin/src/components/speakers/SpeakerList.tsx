@@ -5,9 +5,9 @@ export const SpeakerList = () => (
         <Datagrid rowClick="edit">
             <TextField source="id" label="ID" />
             <ImageField source="photoUrl" label="Photo" />
-            <TextField source="name" label="Nom" />
-            <TextField source="company" label="Entreprise" />
+            <TextField source="fullName" label="Nom complet" />
             <TextField source="bio" label="Biographie" />
+            <TextField source="links" label="Liens" />
             <EditButton label="Modifier" />
             <DeleteButton label="Supprimer" />
         </Datagrid>
