@@ -7,11 +7,14 @@ import dataProvider from './providers/dataProvider'
 import { authProvider } from './providers/authProvider';
 import { EventShow } from './components/events/EventShow';
 import { Dashboard } from './components/Dashboard';
+import CustomLoginPage from "./components/customLoginPage"
 
 const App = () => (
     <Admin theme={customTheme} 
     dataProvider={dataProvider}
-    authProvider={authProvider}dashboard={Dashboard}>
+    loginPage={CustomLoginPage}
+    authProvider={authProvider}
+    dashboard={Dashboard}>
         <Resource 
            name="events" 
             list={EventList}
