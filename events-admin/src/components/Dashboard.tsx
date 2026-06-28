@@ -1,11 +1,11 @@
 import { useGetList } from 'react-admin';
-import { Card, Box, Typography, Grid, Button, Table, TableBody, TableContainer, TableHead, Container } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import GroupIcon from '@mui/icons-material/Group';
 import AddIcon from '@mui/icons-material/Add';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import { Card, Box, Typography, Grid as Grid, Button, Table, TableBody, TableContainer, TableHead, Container } from '@mui/material';
 
 export const Dashboard = () => {
     const { total: totalEvents, isLoading: loadingEvents } = useGetList('events', { pagination: { page: 1, perPage: 1 } });
