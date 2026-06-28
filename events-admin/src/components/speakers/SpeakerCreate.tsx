@@ -2,6 +2,11 @@ import { Create, SimpleForm, TextInput } from "react-admin";
 import { useWatch } from "react-hook-form";
 import { Box, Avatar, Typography, Paper } from "@mui/material";
 
+// Le backend exige un id non-null à la création (voir SpeakerServiceImpl.createSpeaker).
+// Comme la colonne speaker.id est un VARCHAR(20) sans génération automatique côté DB,
+// c'est au frontend de fournir un id, dans le même style que les autres entités (ex: evt-xxxxx).
+const generateSpeakerId = () => `spk-${Math.random().toString(36).substring(2, 11)}`;
+
 const speakerFormStyles = {
     "& .MuiPaper-root": {
         backgroundColor: "#13131a !important",
@@ -77,6 +82,7 @@ const PhotoPreview = () => {
 
 export const SpeakerCreate = () => (
     <Create
+        transform={(data) => ({ ...data, id: generateSpeakerId() })}
         sx={speakerFormStyles}
         title="Add a Speaker"
     >
