@@ -18,7 +18,7 @@ const speakerShowStyles = {
     },
 };
 
-// Contenu de la fiche détaillée, lit le speaker actuel via useRecordContext
+// Detail view content, reads the current speaker via useRecordContext
 const SpeakerDetail = () => {
     const record = useRecordContext();
     if (!record) return null;
@@ -93,10 +93,10 @@ const SpeakerDetail = () => {
                     variant="overline"
                     sx={{ color: "#a3e635", fontWeight: 700, letterSpacing: "0.06em" }}
                 >
-                    Biographie
+                    Biography
                 </Typography>
                 <Typography sx={{ color: "#d4d4d8", lineHeight: 1.7 }}>
-                    {record.bio || "Aucune biographie renseignée."}
+                    {record.bio || "No biography provided."}
                 </Typography>
             </Stack>
         </Paper>

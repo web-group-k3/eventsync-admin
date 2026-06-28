@@ -20,7 +20,7 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-// Style local appliqué uniquement à la page Speakers (n'affecte pas Events/Rooms)
+// Local style applied only to the Speakers page (does not affect Events/Rooms)
 const speakerListStyles = {
     "&.RaList-root": {
         backgroundColor: "transparent",
@@ -105,7 +105,7 @@ export const SpeakerList = () => (
                 )}
             />
             <FunctionField
-                label="Biographie"
+                label="Biography"
                 render={(record: any) => (
                     <Typography
                         variant="body2"
@@ -123,7 +123,7 @@ export const SpeakerList = () => (
                 )}
             />
             <FunctionField
-                label="Liens"
+                label="Links"
                 render={(record: any) =>
                     record.links ? (
                         <Chip
@@ -145,9 +145,9 @@ export const SpeakerList = () => (
                 }
             />
             <TextField source="id" label="ID" sx={{ color: "#71717a !important", fontSize: "0.8rem" }} />
-            <ShowButton label="Voir" />
-            <EditButton label="Modifier" />
-            <DeleteButton label="Supprimer" />
+            <ShowButton label="Show" />
+            <EditButton label="Edit" />
+            <DeleteButton label="Delete" />
         </Datagrid>
     </List>
 );

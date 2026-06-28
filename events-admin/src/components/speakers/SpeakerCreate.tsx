@@ -2,9 +2,9 @@ import { Create, SimpleForm, TextInput } from "react-admin";
 import { useWatch } from "react-hook-form";
 import { Box, Avatar, Typography, Paper } from "@mui/material";
 
-// Le backend exige un id non-null à la création (voir SpeakerServiceImpl.createSpeaker).
-// Comme la colonne speaker.id est un VARCHAR(20) sans génération automatique côté DB,
-// c'est au frontend de fournir un id, dans le même style que les autres entités (ex: evt-xxxxx).
+// The backend requires a non-null id on creation (see SpeakerServiceImpl.createSpeaker).
+// Since the speaker.id column is a VARCHAR(20) with no automatic DB-side generation,
+// it's the frontend's responsibility to provide an id, in the same style as other entities (e.g. evt-xxxxx).
 const generateSpeakerId = () => `spk-${Math.random().toString(36).substring(2, 11)}`;
 
 const speakerFormStyles = {
@@ -39,7 +39,7 @@ const speakerFormStyles = {
     },
 };
 
-// Aperçu de la photo en direct, basé sur la valeur tapée dans le champ photoUrl
+// Live photo preview based on the value typed in the photoUrl field
 const PhotoPreview = () => {
     const fullName: string = useWatch({ name: "fullName" }) || "";
     const photoUrl: string = useWatch({ name: "photoUrl" }) || "";
@@ -57,7 +57,7 @@ const PhotoPreview = () => {
             }}
         >
             <Typography variant="overline" sx={{ color: "#a1a1aa" }}>
-                Aperçu
+                Preview
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
                 <Avatar
@@ -74,7 +74,7 @@ const PhotoPreview = () => {
                 </Avatar>
             </Box>
             <Typography sx={{ color: "#f5f5f5", fontWeight: 700 }}>
-                {fullName || "Nom du speaker"}
+                {fullName || "Speaker name"}
             </Typography>
         </Paper>
     );
@@ -96,10 +96,10 @@ export const SpeakerCreate = () => (
                 }}
             >
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                    <TextInput source="fullName" label="Nom complet" fullWidth />
-                    <TextInput source="bio" label="Biographie" multiline rows={4} fullWidth />
-                    <TextInput source="photoUrl" label="Lien vers la photo de profil" fullWidth />
-                    <TextInput source="links" label="Liens (réseaux sociaux, site...)" fullWidth />
+                    <TextInput source="fullName" label="Full name" fullWidth />
+                    <TextInput source="bio" label="Biography" multiline rows={4} fullWidth />
+                    <TextInput source="photoUrl" label="Profile photo URL" fullWidth />
+                    <TextInput source="links" label="Links (social media, website...)" fullWidth />
                 </Box>
                 <PhotoPreview />
             </Box>
