@@ -1,13 +1,67 @@
 import { 
     Create, SimpleForm, TextInput, DateTimeInput, 
-    required, ReferenceInput, SelectInput, ArrayInput, SimpleFormIterator 
+    required, ReferenceInput, SelectInput, ArrayInput, SimpleFormIterator,
+    useNotify, useRedirect
 } from 'react-admin';
 import { Box, Typography } from '@mui/material';
 
-
 export const EventCreate = () => {
-  const transformEventData = (data: any) => {
-    const cleanedData = { ...data };
+    const notify = useNotify();
+    const redirect = useRedirect();
+
+    // 🔒 Global form validation function (English version)
+    const validateEventAndSessions = (values: any) => {
+        const errors: any = {};
+
+        if (!values.startDate || !values.endDate) return errors;
+
+        const eventStart = new Date(values.startDate).getTime();
+        const eventEnd = new Date(values.endDate).getTime();
+
+        if (eventStart >= eventEnd) {
+            errors.endDate = "The event must end after its start date.";
+        }
+
+        // Checking each nested session
+        if (values.sessions && values.sessions.length > 0) {
+            const sessionErrors: any[] = [];
+
+            values.sessions.forEach((session: any, index: number) => {
+                const currentSessionError: any = {};
+
+                if (session.startTime && session.endTime) {
+                    const sessionStart = new Date(session.startTime).getTime();
+                    const sessionEnd = new Date(session.endTime).getTime();
+
+                    // Rule A: Start before end
+                    if (sessionStart >= sessionEnd) {
+                        currentSessionError.endTime = "The session must end after its start time.";
+                    }
+                    // Rule B: Cannot start before the event itself
+                    if (sessionStart < eventStart) {
+                        currentSessionError.startTime = "The session cannot start before the event.";
+                    }
+                    // Rule C: Cannot end after the event itself
+                    if (sessionEnd > eventEnd) {
+                        currentSessionError.endTime = "The session cannot extend past the end of the event.";
+                    }
+                }
+
+                if (Object.keys(currentSessionError).length > 0) {
+                    sessionErrors[index] = currentSessionError;
+                }
+            });
+
+            if (sessionErrors.length > 0) {
+                errors.sessions = sessionErrors;
+            }
+        }
+
+        return errors;
+    };
+
+    const transformEventData = (data: any) => {
+        const cleanedData = { ...data };
 
         if (cleanedData.startDate) {
             cleanedData.startDate = new Date(cleanedData.startDate).toISOString().split('.')[0];
@@ -20,20 +74,34 @@ export const EventCreate = () => {
             cleanedData.sessions = [];
         } else {
             cleanedData.sessions = cleanedData.sessions.map((session: any) => ({
-                ...session,
+                title: session.title,
+                description: session.description,
                 startTime: session.startTime ? new Date(session.startTime).toISOString().split('.')[0] : null,
                 endTime: session.endTime ? new Date(session.endTime).toISOString().split('.')[0] : null,
+                guestNumber: 0,
+                isLive: false,
+                room: session.roomId ? { id: session.roomId } : null,
+                speakers: session.speakerId ? [{ id: session.speakerId }] : []
             }));
         }
 
+        return cleanedData;
+    };
 
-    return cleanedData;
-  };
+    const onError = (error: any) => {
+        notify(error.message || 'Error: Invalid data submitted', { type: 'error' });
+    };
+
+    const onSuccess = () => {
+        notify('Event created successfully', { type: 'success' });
+        redirect('/events');
+    };
 
     return (
         <Create 
             title=" "
             transform={transformEventData} 
+            mutationOptions={{ onError, onSuccess }}
             component={Box}
             sx={{
                 padding: 4,
@@ -42,6 +110,7 @@ export const EventCreate = () => {
             }}
         >
             <SimpleForm 
+                validate={validateEventAndSessions}
                 sx={{
                     backgroundColor: '#111827',
                     borderRadius: '16px',
@@ -109,7 +178,6 @@ export const EventCreate = () => {
                                     '& .RaSimpleFormIterator-form': { display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }
                                 }}
                             >
-                                {/* ✅ Titre et description de session maintenant séparés */}
                                 <TextInput source="title" label="Session Title" fullWidth required />
                                 <TextInput source="description" label="Session Description" multiline rows={2} fullWidth />
                                 
@@ -134,8 +202,8 @@ export const EventCreate = () => {
                                 </Box>
 
                                 <Box display="flex" gap={2} width="100%">
-                                    <DateTimeInput source="startTime" label="Heure Début" validate={[required()]} style={{ flex: 1 }} />
-                                    <DateTimeInput source="endTime" label="Heure Fin" validate={[required()]} style={{ flex: 1 }} />
+                                    <DateTimeInput source="startTime" label="Start Time" validate={[required()]} style={{ flex: 1 }} />
+                                    <DateTimeInput source="endTime" label="End Time" validate={[required()]} style={{ flex: 1 }} />
                                 </Box>
 
                             </SimpleFormIterator>
@@ -147,4 +215,3 @@ export const EventCreate = () => {
         </Create>
     );
 };
-
