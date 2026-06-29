@@ -20,7 +20,6 @@ const ListActions = () => (
     </TopToolbar>
 );
 
-// Local style applied only to the Speakers page (does not affect Events/Rooms)
 const speakerListStyles = {
     "&.RaList-root": {
         backgroundColor: "transparent",
@@ -76,6 +75,21 @@ const speakerListStyles = {
         textTransform: "none",
         fontWeight: 600,
     },
+    "& .MuiDialog-paper": {
+        backgroundColor: "#13131a !important",
+        color: "#f5f5f5 !important",
+        borderRadius: "16px !important",
+        border: "1px solid rgba(255,255,255,0.08)",
+    },
+    "& .MuiDialogContentText-root": {
+        color: "#a1a1aa !important",
+    },
+    "& .MuiDialogActions-root .MuiButton-root": {
+        color: "#a3e635 !important",
+    },
+    "& .MuiDialogActions-root .MuiButton-root .MuiSvgIcon-root": {
+        color: "#a3e635 !important",
+    }
 };
 
 export const SpeakerList = () => (
@@ -147,7 +161,7 @@ export const SpeakerList = () => (
             <TextField source="id" label="ID" sx={{ color: "#71717a !important", fontSize: "0.8rem" }} />
             <ShowButton label="Show" />
             <EditButton label="Edit" />
-            <DeleteButton label="Delete" />
+            <DeleteButton label="Delete" mutationMode="pessimistic" />
         </Datagrid>
     </List>
 );

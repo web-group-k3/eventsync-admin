@@ -1,4 +1,4 @@
-import { Edit, SimpleForm, TextInput } from "react-admin";
+import { Edit, SimpleForm, TextInput, Toolbar, SaveButton, DeleteButton } from "react-admin";
 import { useWatch } from "react-hook-form";
 import { Box, Avatar, Typography, Paper } from "@mui/material";
 
@@ -34,7 +34,14 @@ const speakerFormStyles = {
     },
 };
 
-// Live photo preview based on the current form value
+
+const CustomToolbar = () => (
+    <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+        <SaveButton />
+        <DeleteButton mutationMode="pessimistic" />
+    </Toolbar>
+);
+
 const PhotoPreview = () => {
     const fullName: string = useWatch({ name: "fullName" }) || "";
     const photoUrl: string = useWatch({ name: "photoUrl" }) || "";
@@ -76,8 +83,8 @@ const PhotoPreview = () => {
 };
 
 export const SpeakerEdit = () => (
-    <Edit sx={speakerFormStyles} title="Edit Speaker">
-        <SimpleForm>
+    <Edit sx={speakerFormStyles} title="Edit Speaker" mutationMode="pessimistic">
+        <SimpleForm toolbar={<CustomToolbar />}>
             <Box
                 sx={{
                     display: "grid",
