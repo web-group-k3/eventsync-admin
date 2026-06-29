@@ -2,15 +2,17 @@ import {
   List,
   Datagrid,
   TextField,
-  DateField,
-  EditButton,
+  FunctionField,
   ShowButton,
+  EditButton,
   DeleteButton,
   TopToolbar,
   CreateButton,
   ExportButton,
 } from "react-admin";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Chip } from "@mui/material";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const ListActions = () => (
   <TopToolbar
@@ -39,7 +41,7 @@ const ListActions = () => (
   </TopToolbar>
 );
 
-export const EventList = () => (
+export const RoomList = () => (
   <Box
     sx={{
       width: "100%",
@@ -53,10 +55,10 @@ export const EventList = () => (
         variant="h4"
         sx={{ fontWeight: 800, color: "#ffffff", letterSpacing: "-0.5px" }}
       >
-        Events Registry
+        Rooms Registry
       </Typography>
       <Typography variant="body2" sx={{ color: "#9ca3af", mt: 0.5 }}>
-        Review, manage, and coordinate your complete events pipeline.
+        Manage physical locations and venues for your events.
       </Typography>
     </Box>
 
@@ -119,14 +121,42 @@ export const EventList = () => (
           sx={{ fontFamily: "monospace", color: "#9ca3af" }}
         />
         <TextField
-          source="title"
-          label="Event Name"
+          source="name"
+          label="Room Name"
           sx={{ fontWeight: 700, color: "#a3ff12" }}
         />
-        <DateField source="startDate" label="Start Date" showTime />
-        <DateField source="endDate" label="End Date" showTime />
-        <TextField source="location" label="Location" />
-
+        <FunctionField
+          label="Address"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          render={(record: any) => (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+              <LocationOnIcon sx={{ color: "#9ca3af", fontSize: "1rem" }} />
+              <Typography variant="body2" sx={{ color: "#d1d5db" }}>
+                {record.adress || record.address || "—"}
+              </Typography>
+            </Box>
+          )}
+        />
+        <FunctionField
+          label="Capacity"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          render={(record: any) => (
+            <Chip
+              icon={
+                <MeetingRoomIcon
+                  sx={{ fontSize: 14, color: "#a3ff12 !important" }}
+                />
+              }
+              label={`${record.capacity ?? "?"} seats`}
+              size="small"
+              sx={{
+                backgroundColor: "rgba(163, 255, 18, 0.1)",
+                color: "#a3ff12",
+                fontWeight: 600,
+              }}
+            />
+          )}
+        />
         <ShowButton sx={{ color: "#a3ff12", textTransform: "none" }} />
         <EditButton sx={{ color: "#a3ff12", textTransform: "none" }} />
         <DeleteButton

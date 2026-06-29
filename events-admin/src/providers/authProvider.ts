@@ -20,9 +20,7 @@ export const authProvider: AuthProvider = {
     return Promise.resolve();
   },
   checkAuth: () => {
-    return localStorage.getItem("token")
-      ? Promise.resolve()
-      : Promise.reject();
+    return localStorage.getItem("token") ? Promise.resolve() : Promise.reject();
   },
   checkError: (error) => {
     if (error.status === 401 || error.status === 403) {

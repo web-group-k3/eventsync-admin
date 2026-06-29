@@ -1,4 +1,5 @@
 import { Admin, Resource } from 'react-admin';
+
 import { customTheme } from './theme/customTheme';
 import dataProvider from './providers/dataProvider';
 import { authProvider } from './providers/authProvider';
@@ -15,6 +16,11 @@ import { SpeakerList } from "./components/speakers/SpeakerList";
 import { SpeakerCreate } from "./components/speakers/SpeakerCreate";
 import { SpeakerEdit } from "./components/speakers/SpeakerEdit";
 import { SpeakerShow } from "./components/speakers/SpeakerShow";
+
+import { RoomList } from "./components/rooms/RoomList";
+import { RoomCreate } from "./components/rooms/RoomCreate";
+import { RoomEdit } from "./components/rooms/RoomEdit";
+import { RoomShow } from "./components/rooms/RoomShow";
 
 const App = () => (
     <Admin 
@@ -40,6 +46,15 @@ const App = () => (
             edit={SpeakerEdit}
             show={SpeakerShow}
             options={{ label: 'Speakers' }}
+        />
+
+        <Resource 
+            name="rooms"
+            list={RoomList}
+            create={RoomCreate}
+            edit={RoomEdit}
+            show={RoomShow}
+            options={{ label: 'Rooms' }}
         />
     </Admin>
 );

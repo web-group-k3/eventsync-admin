@@ -4,9 +4,10 @@ import {
 } from 'react-admin';
 import { Box, Typography } from '@mui/material';
 
+
 export const EventCreate = () => {
-    const transformEventData = (data: any) => {
-        const cleanedData = { ...data };
+  const transformEventData = (data: any) => {
+    const cleanedData = { ...data };
 
         if (cleanedData.startDate) {
             cleanedData.startDate = new Date(cleanedData.startDate).toISOString().split('.')[0];
@@ -25,8 +26,9 @@ export const EventCreate = () => {
             }));
         }
 
-        return cleanedData;
-    };
+
+    return cleanedData;
+  };
 
     return (
         <Create 
@@ -145,3 +147,4 @@ export const EventCreate = () => {
         </Create>
     );
 };
+
