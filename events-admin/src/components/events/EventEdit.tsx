@@ -53,7 +53,6 @@ export const EventEdit = () => {
             >
                 <Box display="flex" flexDirection="column" width="100%" gap={3}>
                     
-                    {/* En-tête */}
                     <Box mb={1}>
                         <Typography variant="h5" sx={{ fontWeight: 700, color: '#f3f4f6' }}>
                             Modify Event & Timeline
@@ -113,7 +112,8 @@ export const EventEdit = () => {
                                     '& .RaSimpleFormIterator-form': { display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }
                                 }}
                             >
-                                <TextInput source="title" label="Session Title / Description" fullWidth required />
+                                <TextInput source="title" label="Session Title" fullWidth required />
+                                <TextInput source="description" label="Session Description" multiline rows={2} fullWidth />
                                 
                                 <Box display="flex" gap={2} width="100%">
                                     <ReferenceInput source="roomId" reference="rooms">

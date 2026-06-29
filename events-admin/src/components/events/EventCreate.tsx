@@ -104,11 +104,12 @@ export const EventCreate = () => {
                                     padding: '16px',
                                     backgroundColor: '#1f2937',
                                     borderRadius: '8px',
-                                    gridTemplateColumns: '1fr',
                                     '& .RaSimpleFormIterator-form': { display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }
                                 }}
                             >
-                                <TextInput source="title" label="Session Title / Description" fullWidth required />
+                                {/* ✅ Titre et description de session maintenant séparés */}
+                                <TextInput source="title" label="Session Title" fullWidth required />
+                                <TextInput source="description" label="Session Description" multiline rows={2} fullWidth />
                                 
                                 <Box display="flex" gap={2} width="100%">
                                     <ReferenceInput source="roomId" reference="rooms">
