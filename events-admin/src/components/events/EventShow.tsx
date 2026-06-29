@@ -111,12 +111,12 @@ export const EventShow = () => (
                     <Datagrid bulkActionButtons={false}>
                         <TextField source="title" label="Session Title" sx={{ fontWeight: 600 }} />
 
-                        <ReferenceField source="roomId" reference="rooms" link="show">
-                            <TextField source="name" />
+                        <ReferenceField source="roomId" reference="rooms" link={false}>
+                            <TextField source="name" label="Room" />
                         </ReferenceField>
 
-                        <ReferenceField source="speakerId" reference="speakers" link="show">
-                            <TextField source="fullName" />
+                        <ReferenceField source="speakers[0].id" reference="speakers" link={false}>
+                            <TextField source="fullName" label="Speaker" />
                         </ReferenceField>
 
                         <DateField source="startTime" label="Start Time" showTime />
@@ -128,4 +128,3 @@ export const EventShow = () => (
         </SimpleShowLayout>
     </Show>
 );
-

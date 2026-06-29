@@ -9,7 +9,6 @@ export const EventCreate = () => {
     const notify = useNotify();
     const redirect = useRedirect();
 
-    // 🔒 Global form validation function (English version)
     const validateEventAndSessions = (values: any) => {
         const errors: any = {};
 
@@ -22,7 +21,6 @@ export const EventCreate = () => {
             errors.endDate = "The event must end after its start date.";
         }
 
-        // Checking each nested session
         if (values.sessions && values.sessions.length > 0) {
             const sessionErrors: any[] = [];
 
@@ -33,15 +31,12 @@ export const EventCreate = () => {
                     const sessionStart = new Date(session.startTime).getTime();
                     const sessionEnd = new Date(session.endTime).getTime();
 
-                    // Rule A: Start before end
                     if (sessionStart >= sessionEnd) {
                         currentSessionError.endTime = "The session must end after its start time.";
                     }
-                    // Rule B: Cannot start before the event itself
                     if (sessionStart < eventStart) {
                         currentSessionError.startTime = "The session cannot start before the event.";
                     }
-                    // Rule C: Cannot end after the event itself
                     if (sessionEnd > eventEnd) {
                         currentSessionError.endTime = "The session cannot extend past the end of the event.";
                     }
@@ -61,7 +56,8 @@ export const EventCreate = () => {
     };
 
     const transformEventData = (data: any) => {
-        const cleanedData = { ...data };
+        const eventId = data.id || "evt-" + Math.random().toString(36).substring(2, 11);
+        const cleanedData = { ...data, id: eventId };
 
         if (cleanedData.startDate) {
             cleanedData.startDate = new Date(cleanedData.startDate).toISOString().split('.')[0];
@@ -74,13 +70,19 @@ export const EventCreate = () => {
             cleanedData.sessions = [];
         } else {
             cleanedData.sessions = cleanedData.sessions.map((session: any) => ({
+                id: "ssn-" + Math.random().toString(36).substring(2, 11),
                 title: session.title,
                 description: session.description,
                 startTime: session.startTime ? new Date(session.startTime).toISOString().split('.')[0] : null,
                 endTime: session.endTime ? new Date(session.endTime).toISOString().split('.')[0] : null,
                 guestNumber: 0,
                 isLive: false,
+                
+                eventId: eventId, 
+                
+                roomId: session.roomId ? { id: session.roomId } : null,
                 room: session.roomId ? { id: session.roomId } : null,
+                
                 speakers: session.speakerId ? [{ id: session.speakerId }] : []
             }));
         }

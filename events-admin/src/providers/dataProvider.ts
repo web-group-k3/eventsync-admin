@@ -12,11 +12,8 @@ const getHeaders = () => {
 
 export const dataProvider: DataProvider = {
   getList: async (resource, params) => {
-    const response = await fetch(`${apiUrl}/${resource}`, {
-      headers: getHeaders(),
-    });
+    const response = await fetch(`${apiUrl}/${resource}`, { headers: getHeaders() });
     const data = await response.json();
-
     return {
       data: Array.isArray(data) ? data : data.content || [],
       total: Array.isArray(data) ? data.length : data.totalElements || 0,
@@ -24,19 +21,14 @@ export const dataProvider: DataProvider = {
   },
 
   getOne: async (resource, params) => {
-    const response = await fetch(`${apiUrl}/${resource}/${params.id}`, {
-      headers: getHeaders(),
-    });
-    if (!response.ok) {
-      throw new Error(`Resource not found (404)`);
-    }
+    const response = await fetch(`${apiUrl}/${resource}/${params.id}`, { headers: getHeaders() });
+    if (!response.ok) throw new Error(`Resource not found (404)`);
     const data = await response.json();
     return { data };
   },
 
   create: async (resource, params) => {
     const payload = { ...params.data };
-
     if (!payload.id) {
       const prefix = resource === "rooms" ? "rm" : "evt";
       payload.id = prefix + "-" + Math.random().toString(36).substring(2, 11);
@@ -50,9 +42,7 @@ export const dataProvider: DataProvider = {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(
-        `Server error (${response.status}): ${errorText || "Invalid data submitted"}`,
-      );
+      throw new Error(`Server error (${response.status}): ${errorText || "Invalid data submitted"}`);
     }
 
     const data = await response.json();
@@ -65,36 +55,16 @@ export const dataProvider: DataProvider = {
       headers: getHeaders(),
       body: JSON.stringify(params.data),
     });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Server error (${response.status}): ${errorText || "Failed to update"}`,
-      );
-    }
-
+    if (!response.ok) throw new Error(`Failed to update`);
     const data = await response.json();
     return { data };
   },
 
   delete: async (resource, params) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this item?",
-    );
-
-    if (!confirmDelete) {
-      throw new Error("Deletion cancelled by user");
-    }
-
-    const response = await fetch(`${apiUrl}/${resource}/${params.id}`, {
-      method: "DELETE",
-      headers: getHeaders(),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to delete resource`);
-    }
-
+    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+    if (!confirmDelete) throw new Error("Deletion cancelled by user");
+    const response = await fetch(`${apiUrl}/${resource}/${params.id}`, { method: "DELETE", headers: getHeaders() });
+    if (!response.ok) throw new Error(`Failed to delete resource`);
     return { data: params.previousData };
   },
 
